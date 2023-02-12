@@ -7,6 +7,10 @@ Adds a job for planting trees on fertile soil.
 
 ![Preview](doc/preview.png)
 
+Find it in the settlements bottom menu:
+
+![Menu Preview](doc/menu_preview.png)
+
 ## Build
 
 For dependency setup:
