@@ -19,7 +19,6 @@ public class PlantTreeJob extends JobBuild {
 
     private final PlacableMulti placer;
 
-
     private final int performTime;
 
     /**
@@ -44,6 +43,9 @@ public class PlantTreeJob extends JobBuild {
         SPRITES.cons().ICO.tile.render(r, x, y);
     }
 
+    /**
+     * Plants the actual tree on a tile
+     */
     @Override
     protected boolean construct(int tx, int ty) {
         GAME.player().res().outConstruction.inc(res, resAmount);
