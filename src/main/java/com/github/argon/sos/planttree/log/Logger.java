@@ -38,7 +38,7 @@ public class Logger {
     }
 
     public void info(String formatMsg, Object... args) {
-        log("INFO: ", Level.INFO, formatMsg, args);
+        log("[INFO] ", Level.INFO, formatMsg, args);
     }
 
     public void debug(String formatMsg, Object... args) {

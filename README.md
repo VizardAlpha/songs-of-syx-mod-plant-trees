@@ -31,7 +31,7 @@ mvn validate install
 * **Linux:** ~/.local/share/songsofsyx/mods/
 
 
-**(2)** Run the game and you should see a `songs-of-syx-mod-plant-tree` mod. Activate it and launch.
+**(2)** Run the game and you should see a `Plant Trees` mod. Activate it and launch.
 
 **(3)** Start a new game. In the new game settings activate the `Plant Trees` under **Scripts**.
 

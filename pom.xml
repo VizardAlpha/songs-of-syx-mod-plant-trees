@@ -41,7 +41,7 @@
 
         <!-- These settings will go into the mods _info.txt file -->
         <mod.version>${project.version}</mod.version>
-        <mod.name>${project.artifactId}</mod.name>
+        <mod.name>Plant Trees</mod.name>
         <mod.description>Adds a job for planting trees on fertile soil.</mod.description>
         <mod.author>4rg0n</mod.author>
         <mod.info>Planting a tree costs 3 wood and the ground needs a minimum fertility of 33%.</mod.info>
