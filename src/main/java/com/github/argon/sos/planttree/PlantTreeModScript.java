@@ -38,7 +38,7 @@ public final class PlantTreeModScript implements SCRIPT {
 	}
 
 	@Override
-	public SCRIPT_INSTANCE initAfterGameCreated() {
+	public SCRIPT_INSTANCE createInstance() {
 		log.info("initialized");
 
 		PlantTreeJob plantTreeJob = new PlantTreeJob(
