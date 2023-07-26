@@ -17,7 +17,7 @@ The mod uses a new way to hook into the game - possible since V64 of the game.
 There's now a way to extend from package private classes / constructors and even replace whole game classes with your own code.
 The custom mod class has to have the same package to access package private game classes.
 
-I'm using this to make a custom [PlantTreeJob.java](https://github.com/4rg0n/songs-of-syx-mod-plant-trees/blob/master/src/main/java/settlement/job/PlantTreeJob.java) extend from the games JobBuild class with a package private constructor. With this new method it possible to replace whole sections of the game with your own. Thx Jake =D
+I'm using this to make a custom [PlantTreeJob.java](https://github.com/4rg0n/songs-of-syx-mod-plant-trees/blob/master/src/main/java/settlement/job/PlantTreeJob.java) to extend from the games JobBuild class with a package private constructor. With this new method it's possible to replace whole sections of the game with your own. Thx Jake =D
 
 ## Getting started
 
