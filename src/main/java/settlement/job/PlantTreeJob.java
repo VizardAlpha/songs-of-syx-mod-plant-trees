@@ -6,9 +6,12 @@ import init.sound.SOUND;
 import init.sound.SoundSettlement;
 import init.sprite.SPRITES;
 import settlement.entity.humanoid.Humanoid;
+import settlement.main.SETT;
+import settlement.tilemap.Floors;
 import settlement.tilemap.Terrain;
 import snake2d.SPRITE_RENDERER;
 import snake2d.util.sprite.SPRITE;
+import view.tool.PlacableMessages;
 import view.tool.PlacableMulti;
 
 import static settlement.main.SETT.TERRAIN;
@@ -71,5 +74,23 @@ public class PlantTreeJob extends JobBuild {
     @Override
     protected double constructionTime(Humanoid skill) {
         return performTime;
+    }
+
+    @Override
+    protected CharSequence problem(int tx, int ty, boolean overwrite) {
+        CharSequence problem = super.problem(tx, ty, overwrite);
+
+        if (problem != null) {
+            return problem;
+        }
+
+        Floors.Floor floor = SETT.FLOOR().getter.get(tx, ty);
+
+        // only plant on grass
+        if (floor != null && !floor.isGrass){
+            return "Trees can only grow on soil";
+        }
+
+        return null;
     }
 }

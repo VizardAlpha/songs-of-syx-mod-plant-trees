@@ -1,0 +1,51 @@
+name: Steam Publish
+on: workflow_dispatch
+
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Fetch Github Release Asset
+        id: fetch-release
+        uses: dsaltares/fetch-gh-release-asset@1.1.0
+        with:
+          file: 'Plant.Trees.zip'
+          target: 'Plant.Trees.zip'
+
+      - name: Unzip
+        run: unzip Plant.Trees.zip
+
+      - name: Setup steamcmd
+        uses: CyberAndrii/setup-steamcmd@v1.1.5
+
+      - name: Generate auth code
+        id: generate-code
+        uses: CyberAndrii/steam-totp@v1.0.3
+        with:
+          shared_secret: ${{ secrets.STEAM_2FASEED }}
+
+      - name: Create vdf file
+        run: |
+          cat << EOT > ${{ github.workspace }}/workshop_build.vdf
+          "workshopitem"
+          {
+              "appid" "1162750"
+              "publishedfileid" "2932166515"
+              "visibility" "2"
+              "contentfolder" "${{ github.workspace }}/Plant Trees/"
+              "changenote" "${{ steps.fetch-release.outputs.version }}
+          
+          ${{ steps.fetch-release.outputs.body }}"
+          }
+          EOT
+
+      - name: Steam Publish
+        run: steamcmd +login ${{ secrets.STEAM_USERNAME }} ${{ secrets.STEAM_PASSWORD }} ${{ steps.generate-code.outputs.code }} +workshop_build_item "${{ github.workspace }}/workshop_build.vdf" +quit
+
+      - name: Upload Error Log
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: steam-error-log
+          path: /home/runner/Steam/logs

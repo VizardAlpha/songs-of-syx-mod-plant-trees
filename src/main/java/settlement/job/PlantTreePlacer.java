@@ -11,6 +11,7 @@ import snake2d.util.sprite.SPRITE;
 import util.gui.misc.GBox;
 import view.main.VIEW;
 import view.tool.PLACER_TYPE;
+import view.tool.PlacableMessages;
 import view.tool.PlacableMulti;
 
 import static settlement.main.SETT.JOBS;
@@ -57,6 +58,14 @@ public class PlantTreePlacer extends PlacableMulti {
         // is plantable on terrain type?
         Terrain.TerrainTile terrain = SETT.TERRAIN().get(tx, ty);
         log.trace("Terrain: %s(%s)", terrain.getClass().getSimpleName(), terrain.name());
+
+        //check job problems
+        CharSequence msg = plantTreeJob.problem(tx, ty, Job.overwrite);
+        if (msg != null) {
+            return msg;
+        }
+
+        // check terrain
         if (!(terrain instanceof TNothing)
             && !(terrain instanceof TBush)
             && !(terrain instanceof TGrowable)
