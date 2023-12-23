@@ -161,8 +161,8 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
-                            <groupId>org.songsofsyx</groupId>
-                            <artifactId>songsofsyx</artifactId>
+                            <groupId>com.songsofsyx</groupId>
+                            <artifactId>songs-of-syx</artifactId>
                             <version>${game.version.major}.${game.version.minor}</version>
                             <packaging>jar</packaging>
                             <file>${game.install.directory}/${game.jar.name}</file>
