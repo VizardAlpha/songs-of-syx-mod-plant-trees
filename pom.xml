@@ -59,7 +59,7 @@
         <dependency>
             <groupId>com.songsofsyx</groupId>
             <artifactId>songs-of-syx</artifactId>
-            <version>0.${game.version.major}.${game.version.minor}</version>
+            <version>${game.version.major}.${game.version.minor}</version>
         </dependency>
 
         <!-- Lazy Developer -->
