@@ -66,6 +66,8 @@ public class PlantTreePlacer extends PlacableMulti {
             return msg;
         }
 
+        log.trace("Terrain: %s", terrain.getClass().getSimpleName());
+
         // check terrain
         if (!(terrain instanceof TNothing)
             && !(terrain instanceof TBush)
@@ -73,6 +75,7 @@ public class PlantTreePlacer extends PlacableMulti {
             && !(terrain instanceof TRock)
             && !(terrain instanceof TMushroom)
             && !(terrain instanceof TFlower)
+            && !(terrain instanceof TDecor)
         ) {
             return "No terrain for planting a tree.";
         }

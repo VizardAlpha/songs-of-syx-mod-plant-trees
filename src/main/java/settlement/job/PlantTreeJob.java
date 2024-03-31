@@ -52,7 +52,6 @@ public class PlantTreeJob extends JobBuild {
     @Override
     protected boolean construct(int tx, int ty) {
         GAME.player().res().inc(res, CONSTRUCTION ,resAmount);
-        //GAME.player().res().outConstruction.inc(res, resAmount);
         TERRAIN().TREES.SMALL.placeFixed(tx, ty);
 
         return false;

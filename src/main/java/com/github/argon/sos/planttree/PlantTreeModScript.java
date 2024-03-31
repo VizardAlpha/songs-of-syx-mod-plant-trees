@@ -1,6 +1,7 @@
 package com.github.argon.sos.planttree;
 
 
+import com.github.argon.sos.planttree.log.Level;
 import com.github.argon.sos.planttree.log.Logger;
 import com.github.argon.sos.planttree.log.Loggers;
 import com.github.argon.sos.planttree.util.UIUtil;
@@ -10,8 +11,6 @@ import lombok.NoArgsConstructor;
 import script.SCRIPT;
 import settlement.job.PlantTreeJob;
 import util.info.INFO;
-
-import java.util.logging.Level;
 
 /**
  * Entry point
@@ -34,7 +33,7 @@ public final class PlantTreeModScript implements SCRIPT {
 
 	@Override
 	public void initBeforeGameCreated() {
-		Loggers.setLevels(Level.OFF);
+		Loggers.setLevels(Level.INFO);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 # Songs of Syx Plant Tree Mod
 
+Ported to v65 by [VizardAlpha](https://github.com/VizardAlpha) <3
+
 ## Description
 
 Mod for the game [Songs of Syx](https://store.steampowered.com/app/1162750/Songs_of_Syx/).
