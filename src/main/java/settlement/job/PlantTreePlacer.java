@@ -5,13 +5,14 @@ import com.github.argon.sos.planttree.util.FertilityUtil;
 import com.github.argon.sos.planttree.log.Logger;
 import init.resources.RESOURCE;
 import settlement.main.SETT;
-import settlement.tilemap.*;
+import settlement.tilemap.terrain.*;
+import settlement.tilemap.terrain.TNothing;
+import settlement.tilemap.terrain.Terrain;
 import snake2d.util.datatypes.AREA;
 import snake2d.util.sprite.SPRITE;
 import util.gui.misc.GBox;
 import view.main.VIEW;
 import view.tool.PLACER_TYPE;
-import view.tool.PlacableMessages;
 import view.tool.PlacableMulti;
 
 import static settlement.main.SETT.JOBS;
@@ -69,7 +70,6 @@ public class PlantTreePlacer extends PlacableMulti {
         if (!(terrain instanceof TNothing)
             && !(terrain instanceof TBush)
             && !(terrain instanceof TGrowable)
-            && !(terrain instanceof TWater)
             && !(terrain instanceof TRock)
             && !(terrain instanceof TMushroom)
             && !(terrain instanceof TFlower)
