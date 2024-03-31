@@ -7,13 +7,13 @@ import init.sound.SoundSettlement;
 import init.sprite.SPRITES;
 import settlement.entity.humanoid.Humanoid;
 import settlement.main.SETT;
-import settlement.tilemap.Floors;
-import settlement.tilemap.Terrain;
+import settlement.tilemap.floor.Floors;
+import settlement.tilemap.terrain.Terrain;
 import snake2d.SPRITE_RENDERER;
 import snake2d.util.sprite.SPRITE;
-import view.tool.PlacableMessages;
 import view.tool.PlacableMulti;
 
+import static game.faction.FResources.RTYPE.CONSTRUCTION;
 import static settlement.main.SETT.TERRAIN;
 
 public class PlantTreeJob extends JobBuild {
@@ -51,7 +51,8 @@ public class PlantTreeJob extends JobBuild {
      */
     @Override
     protected boolean construct(int tx, int ty) {
-        GAME.player().res().outConstruction.inc(res, resAmount);
+        GAME.player().res().inc(res, CONSTRUCTION ,resAmount);
+        //GAME.player().res().outConstruction.inc(res, resAmount);
         TERRAIN().TREES.SMALL.placeFixed(tx, ty);
 
         return false;
