@@ -1,9 +1,9 @@
 package settlement.job;
 
 import game.GAME;
+import game.audio.AUDIO;
+import game.audio.Sound;
 import init.resources.RESOURCE;
-import init.sound.SOUND;
-import init.sound.SoundSettlement;
 import init.sprite.SPRITES;
 import settlement.entity.humanoid.Humanoid;
 import settlement.main.SETT;
@@ -20,6 +20,8 @@ public class PlantTreeJob extends JobBuild {
     public final static CharSequence NAME = "Plant Tree";
     public final static CharSequence DESC = "Plants trees";
 
+    private final Sound sound;
+
     private final PlacableMulti placer;
 
     private final int performTime;
@@ -29,7 +31,7 @@ public class PlantTreeJob extends JobBuild {
      * This will be accessible by the settlements {@link JOBS}. So it can be processed as any other job by the game.
      */
     public PlantTreeJob(SPRITE icon, int performTime, int minFertilityPercentage, RESOURCE resource, int resAmount) {
-        super(resource, resAmount, false, NAME, DESC, icon);
+        super("PLANT_TREE", resource, resAmount, false, NAME, DESC, icon);
 
         this.placer = new PlantTreePlacer(
                 this,
@@ -39,6 +41,7 @@ public class PlantTreeJob extends JobBuild {
                 resAmount);
 
         this.performTime = performTime;
+        this.sound = AUDIO.mono().get("CLEAR_TREE");
     }
 
     @Override
@@ -58,8 +61,8 @@ public class PlantTreeJob extends JobBuild {
     }
 
     @Override
-    protected SoundSettlement.Sound constructSound() {
-        return SOUND.sett().action.dig;
+    protected Sound constructSound() {
+        return sound;
     }
 
     @Override

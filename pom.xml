@@ -6,12 +6,105 @@
 
     <groupId>com.github.4rg0n</groupId>
     <artifactId>songs-of-syx-mod-plant-tree</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
+
+    <profiles>
+        <profile>
+            <id>github</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/4rg0n/songs-of-syx-packages</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <game.mod.directory>${user.home}/AppData/Roaming/songsofsyx/mods</game.mod.directory>
+                <game.install.directory>C:/Program Files (x86)/Steam/steamapps/common/Songs of Syx</game.install.directory>
+                <game.mod.uploader.directory>${user.home}/AppData/Roaming/songsofsyx/mods-uploader</game.mod.uploader.directory>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <game.mod.directory>${user.home}/.local/share/songsofsyx/mods</game.mod.directory>
+                <game.install.directory>${user.home}/.steam/steam/SteamApps/common/Songs of Syx</game.install.directory>
+                <game.mod.uploader.directory>${user.home}/.local/share/songsofsyx/mods-uploader</game.mod.uploader.directory>
+            </properties>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+        </profile>
+        <profile>
+            <id>mods-uploader</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <!-- Remove installed mod from mod uploader directory on clean -->
+                                    <directory>${mod.uploader.directory}</directory>
+                                    <includes>
+                                        <!-- Deletes mod folder with files -->
+                                        <include>**</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <!-- Copy the mod files into the mod uploader folder -->
+                            <execution>
+                                <id>copy-mod-to-mod-uploader</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${mod.uploader.directory}</outputDirectory>
+                                    <includeEmptyDirs>true</includeEmptyDirs>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${mod.build.output.directory}</directory>
+                                            <excludes>
+                                                <exclude>**/_src/**</exclude>
+                                            </excludes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <properties>
         <!-- Songs of Syx uses Java 1.8 -->
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- These settings will go into the mods _Info.txt file -->
@@ -20,8 +113,8 @@
         <mod.description>Adds a job for planting trees on fertile soil.</mod.description>
         <mod.author>4rg0n and VizardAlpha</mod.author>
         <mod.info>Planting a tree costs 3 wood and the ground needs a minimum fertility of 33%.</mod.info>
-        <game.version.major>65</game.version.major>
-        <game.version.minor>65</game.version.minor>
+        <game.version.major>66</game.version.major>
+        <game.version.minor>49</game.version.minor>
 
         <!-- Build settings -->
         <game.version.directory>V${game.version.major}</game.version.directory>
@@ -35,7 +128,7 @@
         <mod.dependency.lib.directory>${project.basedir}/lib</mod.dependency.lib.directory>
         <mod.build.output.directory>${basedir}/target/out/${mod.name}</mod.build.output.directory>
         <mod.files.build.output.directory>${mod.build.output.directory}/${game.version.directory}</mod.files.build.output.directory>
-        <mod.script.output.directory>${mod.files.build.output.directory}/script/jar</mod.script.output.directory>
+        <mod.script.output.directory>${mod.files.build.output.directory}/script</mod.script.output.directory>
         <mod.source.output.directory>${mod.files.build.output.directory}/script/_src</mod.source.output.directory>
         <mod.files.directory>${project.basedir}/src/main/resources/${mod.files.name}</mod.files.directory>
 
@@ -43,7 +136,7 @@
         <junit-jupiter-engine.version>5.9.2</junit-jupiter-engine.version>
         <mockito-core.version>4.11.0</mockito-core.version>
         <assertj-core.version>3.24.2</assertj-core.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
 
         <!-- Build plugin versions -->
@@ -59,7 +152,7 @@
         <!-- Game dependency SongsOfSyx.jar -->
         <dependency>
             <groupId>com.songsofsyx</groupId>
-            <artifactId>songs-of-syx</artifactId>
+            <artifactId>songsofsyx</artifactId>
             <version>${game.version.major}.${game.version.minor}</version>
         </dependency>
 
@@ -168,7 +261,7 @@
                         </goals>
                         <configuration>
                             <groupId>com.songsofsyx</groupId>
-                            <artifactId>songs-of-syx</artifactId>
+                            <artifactId>songsofsyx</artifactId>
                             <version>${game.version.major}.${game.version.minor}</version>
                             <packaging>jar</packaging>
                             <file>${game.install.directory}/${game.jar.name}</file>
@@ -184,7 +277,7 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
-                            <groupId>org.songsofsyx</groupId>
+                            <groupId>com.songsofsyx</groupId>
                             <artifactId>songsofsyx</artifactId>
                             <version>${game.version.major}.${game.version.minor}</version>
                             <packaging>jar</packaging>
@@ -230,11 +323,10 @@
                             <resources>
                                 <resource>
                                     <directory>${mod.files.directory}</directory>
-                                    <filtering>true</filtering>
                                     <excludes>
                                         <!-- Everything beginning with a dot -->
                                         <exclude>**/.*</exclude>
-                                        <exclude>_info.txt</exclude>
+                                        <exclude>_Info.txt</exclude>
                                     </excludes>
                                 </resource>
                             </resources>
@@ -277,7 +369,7 @@
                                 <resource>
                                     <directory>${project.build.directory}</directory>
                                     <includes>
-                                        <include>${mod.name}.jar</include>
+                                        <include>${project.build.finalName}.jar</include>
                                     </includes>
                                 </resource>
                             </resources>
@@ -297,7 +389,7 @@
                                 <resource>
                                     <directory>${project.build.directory}</directory>
                                     <includes>
-                                        <include>${mod.name}-sources.jar</include>
+                                        <include>${project.build.finalName}-sources.jar</include>
                                     </includes>
                                 </resource>
                             </resources>
@@ -342,97 +434,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>github</id>
-            <repositories>
-                <repository>
-                    <id>central</id>
-                    <url>https://repo1.maven.org/maven2</url>
-                </repository>
-                <repository>
-                    <id>github</id>
-                    <url>https://maven.pkg.github.com/4rg0n/songs-of-syx-packages</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
-        <profile>
-            <id>windows</id>
-            <properties>
-                <game.mod.directory>${user.home}/AppData/Roaming/songsofsyx/mods</game.mod.directory>
-                <game.install.directory>C:/Program Files (x86)/Steam/steamapps/common/Songs of Syx</game.install.directory>
-                <game.mod.uploader.directory>${user.home}/AppData/Roaming/songsofsyx/mods-uploader</game.mod.uploader.directory>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>linux</id>
-            <properties>
-                <game.mod.directory>${user.home}/.local/share/songsofsyx/mods</game.mod.directory>
-                <game.install.directory>${user.home}/.steam/steam/SteamApps/common/Songs of Syx</game.install.directory>
-                <game.mod.uploader.directory>${user.home}/.local/share/songsofsyx/mods-uploader</game.mod.uploader.directory>
-            </properties>
-            <activation>
-                <os>
-                    <family>Linux</family>
-                </os>
-            </activation>
-        </profile>
-        <profile>
-            <id>mods-uploader</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <!-- Remove installed mod from mod uploader directory on clean -->
-                                    <directory>${mod.uploader.directory}</directory>
-                                    <includes>
-                                        <!-- Deletes mod folder with files -->
-                                        <include>**</include>
-                                    </includes>
-                                    <followSymlinks>false</followSymlinks>
-                                </fileset>
-                            </filesets>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <!-- Copy the mod files into the mod uploader folder -->
-                            <execution>
-                                <id>copy-mod-to-mod-uploader</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${mod.uploader.directory}</outputDirectory>
-                                    <includeEmptyDirs>true</includeEmptyDirs>
-                                    <overwrite>true</overwrite>
-                                    <resources>
-                                        <resource>
-                                            <directory>${mod.build.output.directory}</directory>
-                                            <excludes>
-                                                <exclude>**/_src/**</exclude>
-                                            </excludes>
-                                        </resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
