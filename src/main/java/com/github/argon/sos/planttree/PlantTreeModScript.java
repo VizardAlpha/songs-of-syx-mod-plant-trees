@@ -4,7 +4,8 @@ package com.github.argon.sos.planttree;
 import com.github.argon.sos.planttree.log.Level;
 import com.github.argon.sos.planttree.log.Logger;
 import com.github.argon.sos.planttree.log.Loggers;
-import com.github.argon.sos.planttree.util.UIUtil;
+import com.github.argon.sos.planttree.util.JobUtil;
+import game.GAME;
 import init.resources.RESOURCES;
 import init.sprite.SPRITES;
 import lombok.NoArgsConstructor;
@@ -34,21 +35,24 @@ public final class PlantTreeModScript implements SCRIPT {
 	@Override
 	public void initBeforeGameCreated() {
 		Loggers.setLevels(Level.INFO);
-	}
 
-	@Override
-	public SCRIPT_INSTANCE createInstance() {
-		log.info("initialized");
-
-		PlantTreeJob plantTreeJob = new PlantTreeJob(
+		// will execute after all game resources are initialized
+		// but before VIEW creation
+		GAME.addOnInit(() -> {
+			PlantTreeJob plantTreeJob = new PlantTreeJob(
 				SPRITES.icons().m.agriculture,
 				50,
 				33,
 				RESOURCES.WOOD(),
 				3);
 
-		UIUtil.addJob(plantTreeJob);
+			JobUtil.addClearsJob(plantTreeJob);
+			log.info("initialized");
+		});
+	}
 
+	@Override
+	public SCRIPT_INSTANCE createInstance() {
 		return new Instance();
 	}
 }

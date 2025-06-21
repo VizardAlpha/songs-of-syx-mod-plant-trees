@@ -23,20 +23,6 @@ public class StringUtil {
             .collect(Collectors.joining(", ", "{", "}"));
     }
 
-    public static String unCapitalize(String text) {
-        return Character.toLowerCase(text.charAt(0)) + text.substring(1);
-    }
-
-    public static String extractTail(String text, String delimiterRegex) {
-        String[] split = text.split(delimiterRegex);
-
-        if (split.length == 0) {
-            return text;
-        }
-
-        return split[split.length - 1];
-    }
-
     public static String toStringPrimitiveArray(@Nullable Object arg) {
         if (arg == null) {
             return "null";
@@ -121,60 +107,5 @@ public class StringUtil {
         Arrays.fill(chars, character);
 
         return new String(chars);
-    }
-
-    public static String capitalize(String text) {
-        return text.substring(0, 1).toUpperCase() + text.substring(1);
-    }
-
-    public static @Nullable String unwrap(@Nullable String string, char prefix, char suffix) {
-        if (string == null || string.isEmpty()) {
-            return string;
-        }
-
-        if (string.charAt(0) == prefix && string.charAt(string.length() - 1) == suffix) {
-            string = string.substring(1, string.length() - 2);
-        }
-
-        return string;
-    }
-
-    public static List<String> quote(List<String> strings) {
-        return strings.stream()
-            .map(StringUtil::quote)
-            .collect(Collectors.toList());
-    }
-
-    public static String quote(String string) {
-        return "\"" + string + "\"";
-    }
-
-    public static @Nullable String unquote(@Nullable String string) {
-        return unwrap(string, '"', '"');
-    }
-
-    public static @Nullable String toScreamingSnakeCase(@Nullable String text) {
-        if (text == null || text.isEmpty()) {
-            return text;
-        }
-
-        return text.replaceAll("\\B([A-Z])", "_$1").toUpperCase();
-    }
-
-    /**
-     * Replaces tokens like {0} {1} etc. in a string with the given argument on that place
-     */
-    public static String replaceTokens(String template, Object... args) {
-        if (args.length == 0 || !template.contains("{")) {
-            return template;
-        }
-
-        Str tmp = Str.TMP.clear().add(template);
-        for (int i = 0, argsLength = args.length; i < argsLength; i++) {
-            Object arg = args[i];
-            tmp.insert(i, stringifyValue(arg));
-        }
-
-        return tmp.toString();
     }
 }
