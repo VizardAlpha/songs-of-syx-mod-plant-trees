@@ -1,7 +1,7 @@
 package settlement.job;
 
 import com.github.argon.sos.planttree.log.Loggers;
-import com.github.argon.sos.planttree.util.FertilityUtil;
+import com.github.argon.sos.planttree.util.MoistureUtil;
 import com.github.argon.sos.planttree.log.Logger;
 import init.resources.RESOURCE;
 import settlement.main.SETT;
@@ -26,7 +26,7 @@ public class PlantTreePlacer extends PlacableMulti {
     /**
      * To plant trees on
      */
-    private final int minFertilityPercentage;
+    private final int minMoisturePercentage;
 
     private final PlantTreeJob plantTreeJob;
 
@@ -39,11 +39,11 @@ public class PlantTreePlacer extends PlacableMulti {
      */
     private final int resAmount;
 
-    public PlantTreePlacer(PlantTreeJob plantTreeJob, SPRITE icon, int minFertilityPercentage, RESOURCE resource, int resAmount) {
+    public PlantTreePlacer(PlantTreeJob plantTreeJob, SPRITE icon, int minMoisturePercentage, RESOURCE resource, int resAmount) {
         super(PlantTreeJob.NAME,
-             "Trees can only be planted on tiles with minimal " + minFertilityPercentage + "% fertility",
+             "Trees can only be planted on tiles with minimal " + minMoisturePercentage + "% moisture",
                 icon);
-        this.minFertilityPercentage = minFertilityPercentage;
+        this.minMoisturePercentage = minMoisturePercentage;
         this.plantTreeJob = plantTreeJob;
         this.resource = resource;
         this.resAmount = resAmount;
@@ -80,11 +80,11 @@ public class PlantTreePlacer extends PlacableMulti {
             return "No terrain for planting a tree.";
         }
 
-        // tile has minimal fertility?
-        int fertilityPercentage = (int) (FERTILITY().target.get(tx, ty) * 100);
-        log.trace("Fertility (%d,%d): %s%%", tx, ty, fertilityPercentage);
-        if (fertilityPercentage < minFertilityPercentage) {
-            return "Fertility " + fertilityPercentage + "% is lower than the required " + minFertilityPercentage + "%.";
+        // tile has minimal moisture level?
+        int moisturePercentage = (int) (MoistureUtil.getCurrent(tx, ty) * 100);
+        log.trace("Moisture (%d,%d): %s%%", tx, ty, moisturePercentage);
+        if (moisturePercentage < minMoisturePercentage) {
+            return "Moisture " + moisturePercentage + "% is lower than the required " + minMoisturePercentage + "%.";
         }
 
         return null;
@@ -98,9 +98,9 @@ public class PlantTreePlacer extends PlacableMulti {
         super.placeInfo(b, okTiles, area);
 
         if (okTiles > 0) {
-            int fertilityAvgArea = (int) (FertilityUtil.calcAvg(area) * 100);
+            int moistureAvgArea = (int) (MoistureUtil.calculateAverage(area) * 100);
             VIEW.hoverBox().add(VIEW.hoverBox().text()
-                .add("Fertility: ").add(fertilityAvgArea).add("% ")
+                .add("Moisture: ").add(moistureAvgArea).add("% ")
                 .add("Trees: ").add(okTiles).add(" ")
                 .add(resource.name.toString()).add(": ").add((long) okTiles * resAmount));
         }

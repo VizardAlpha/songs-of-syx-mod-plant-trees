@@ -33,19 +33,21 @@
                 <game.mod.uploader.directory>${user.home}/AppData/Roaming/songsofsyx/mods-uploader</game.mod.uploader.directory>
             </properties>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <os>
+                    <family>windows</family>
+                </os>
             </activation>
         </profile>
         <profile>
             <id>linux</id>
             <properties>
                 <game.mod.directory>${user.home}/.local/share/songsofsyx/mods</game.mod.directory>
-                <game.install.directory>${user.home}/.steam/steam/SteamApps/common/Songs of Syx</game.install.directory>
+                <game.install.directory>${user.home}/.steam/steam/steamapps/common/Songs of Syx</game.install.directory>
                 <game.mod.uploader.directory>${user.home}/.local/share/songsofsyx/mods-uploader</game.mod.uploader.directory>
             </properties>
             <activation>
                 <os>
-                    <family>Linux</family>
+                    <family>unix</family>
                 </os>
             </activation>
         </profile>
@@ -54,6 +56,7 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
                         <configuration>
                             <filesets>
@@ -112,8 +115,10 @@
         <mod.name>Plant Trees</mod.name>
         <mod.description>Adds a job for planting trees on fertile soil.</mod.description>
         <mod.author>4rg0n and VizardAlpha</mod.author>
-        <mod.info>Planting a tree costs 3 wood and the ground needs a minimum fertility of 33%.</mod.info>
-        <game.version.major>67</game.version.major>
+        <mod.info>Planting a tree costs 3 wood and the ground needs a minimum moisture level of 33%.</mod.info>
+
+        <!-- Game version -->
+        <game.version.major>69</game.version.major>
         <game.version.minor>27</game.version.minor>
 
         <!-- Build settings -->

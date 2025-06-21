@@ -30,13 +30,13 @@ public class PlantTreeJob extends JobBuild {
      * There's some magic where on construction the job gets added into {@link Job#all}.
      * This will be accessible by the settlements {@link JOBS}. So it can be processed as any other job by the game.
      */
-    public PlantTreeJob(SPRITE icon, int performTime, int minFertilityPercentage, RESOURCE resource, int resAmount) {
+    public PlantTreeJob(SPRITE icon, int performTime, int minMoisturePercentage, RESOURCE resource, int resAmount) {
         super("PLANT_TREE", resource, resAmount, false, NAME, DESC, icon);
 
         this.placer = new PlantTreePlacer(
                 this,
                 icon,
-                minFertilityPercentage,
+                minMoisturePercentage,
                 resource,
                 resAmount);
 
