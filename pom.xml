@@ -6,7 +6,7 @@
 
     <groupId>com.github.4rg0n</groupId>
     <artifactId>songs-of-syx-mod-plant-tree</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 
     <profiles>
         <profile>
