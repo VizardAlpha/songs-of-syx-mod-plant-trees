@@ -5,13 +5,13 @@ import com.github.argon.sos.planttree.log.Loggers;
 import settlement.job.Job;
 import settlement.main.SETT;
 
-public class UIUtil {
-    private final static Logger log = Loggers.getLogger(UIUtil.class);
+public class JobUtil {
+    private final static Logger log = Loggers.getLogger(JobUtil.class);
 
-    public static void addJob(Job job) {
+    public static void addClearsJob(Job job) {
         int pos = SETT.JOBS().clearss.placers.length - 1;
         SETT.JOBS().clearss.placers[pos] = job.placer();
 
-        log.info("Added job '%s' to UI", job.getClass().getSimpleName());
+        log.debug("Added job class '%s' to clears jobs", job.getClass().getSimpleName());
     }
 }
