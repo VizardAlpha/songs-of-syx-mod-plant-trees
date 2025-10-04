@@ -7,28 +7,6 @@ import lombok.NoArgsConstructor;
 public class ExceptionUtil {
 
     /**
-     * @return whether the needle exception is in the cause chain of the haystack exception
-     */
-    public static boolean contains(Throwable haystack, Throwable needle) {
-        if (haystack == null || needle == null) {
-            return false;
-        }
-
-        Throwable cause;
-        Throwable current = haystack;
-
-        while((cause = current.getCause()) != null && (current != cause) ) {
-            if (needle.equals(cause)) {
-                return true;
-            }
-
-            current = cause;
-        }
-
-        return false;
-    }
-
-    /**
      * @return when the last argument is a Throwable, it will be returned
      */
     public static Throwable extractThrowableLast(Object[] args) {
