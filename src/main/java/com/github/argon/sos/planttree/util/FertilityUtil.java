@@ -3,7 +3,7 @@ package com.github.argon.sos.planttree.util;
 import snake2d.util.datatypes.AREA;
 import snake2d.util.datatypes.COORDINATE;
 
-import static settlement.main.SETT.FERTILITY;
+import static settlement.main.SETT.GROUND;
 
 public class FertilityUtil {
     public static double calcAvg(AREA area) {
@@ -11,7 +11,7 @@ public class FertilityUtil {
 
         for (COORDINATE coordinate : area.body()) {
             if (area.is(coordinate)) {
-                fertilitySum += FERTILITY().target.get(coordinate);
+                fertilitySum += GROUND().MAP.get(coordinate.x(), coordinate.y()).farm;
             }
         }
 

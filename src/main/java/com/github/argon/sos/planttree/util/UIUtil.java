@@ -12,6 +12,6 @@ public class UIUtil {
         int pos = SETT.JOBS().clearss.placers.length - 1;
         SETT.JOBS().clearss.placers[pos] = job.placer();
 
-        log.debug("Added job '%s' to UI", job.getClass().getSimpleName());
+        log.info("Added job '%s' to UI", job.getClass().getSimpleName());
     }
 }

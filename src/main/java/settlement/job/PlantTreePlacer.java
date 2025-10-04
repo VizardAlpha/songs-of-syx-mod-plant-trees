@@ -1,8 +1,8 @@
 package settlement.job;
 
 import com.github.argon.sos.planttree.log.Loggers;
-import com.github.argon.sos.planttree.util.FertilityUtil;
 import com.github.argon.sos.planttree.log.Logger;
+import com.github.argon.sos.planttree.util.FertilityUtil;
 import init.resources.RESOURCE;
 import settlement.main.SETT;
 import settlement.tilemap.terrain.*;
@@ -81,7 +81,7 @@ public class PlantTreePlacer extends PlacableMulti {
         }
 
         // tile has minimal fertility?
-        int fertilityPercentage = (int) (FERTILITY().target.get(tx, ty) * 100);
+        int fertilityPercentage = (int) (GROUND().MAP.get(tx, ty).farm * 100);
         log.trace("Fertility (%d,%d): %s%%", tx, ty, fertilityPercentage);
         if (fertilityPercentage < minFertilityPercentage) {
             return "Fertility " + fertilityPercentage + "% is lower than the required " + minFertilityPercentage + "%.";

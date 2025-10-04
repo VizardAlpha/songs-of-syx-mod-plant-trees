@@ -6,7 +6,7 @@
 
     <groupId>com.github.4rg0n</groupId>
     <artifactId>songs-of-syx-mod-plant-tree</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <properties>
         <!-- Songs of Syx uses Java 1.8 -->
@@ -20,8 +20,8 @@
         <mod.description>Adds a job for planting trees on fertile soil.</mod.description>
         <mod.author>4rg0n and VizardAlpha</mod.author>
         <mod.info>Planting a tree costs 3 wood and the ground needs a minimum fertility of 33%.</mod.info>
-        <game.version.major>65</game.version.major>
-        <game.version.minor>65</game.version.minor>
+        <game.version.major>69</game.version.major>
+        <game.version.minor>39</game.version.minor>
 
         <!-- Build settings -->
         <game.version.directory>V${game.version.major}</game.version.directory>
@@ -35,7 +35,7 @@
         <mod.dependency.lib.directory>${project.basedir}/lib</mod.dependency.lib.directory>
         <mod.build.output.directory>${basedir}/target/out/${mod.name}</mod.build.output.directory>
         <mod.files.build.output.directory>${mod.build.output.directory}/${game.version.directory}</mod.files.build.output.directory>
-        <mod.script.output.directory>${mod.files.build.output.directory}/script/jar</mod.script.output.directory>
+        <mod.script.output.directory>${mod.files.build.output.directory}/script</mod.script.output.directory>
         <mod.source.output.directory>${mod.files.build.output.directory}/script/_src</mod.source.output.directory>
         <mod.files.directory>${project.basedir}/src/main/resources/${mod.files.name}</mod.files.directory>
 
@@ -43,7 +43,7 @@
         <junit-jupiter-engine.version>5.9.2</junit-jupiter-engine.version>
         <mockito-core.version>4.11.0</mockito-core.version>
         <assertj-core.version>3.24.2</assertj-core.version>
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
 
         <!-- Build plugin versions -->
@@ -59,7 +59,7 @@
         <!-- Game dependency SongsOfSyx.jar -->
         <dependency>
             <groupId>com.songsofsyx</groupId>
-            <artifactId>songs-of-syx</artifactId>
+            <artifactId>songsofsyx</artifactId>
             <version>${game.version.major}.${game.version.minor}</version>
         </dependency>
 
@@ -137,6 +137,24 @@
         </pluginManagement>
 
         <plugins>
+            <!-- Maven compiler plugin with Lombok support -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            
             <!-- Remove installed mod from games mod folder on clean -->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -369,6 +387,17 @@
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>windows-vizard</id>
+            <properties>
+                <game.mod.directory>${user.home}/AppData/Roaming/songsofsyx/mods</game.mod.directory>
+                <game.install.directory>E:/Steam/steamapps/common/Songs of Syx</game.install.directory>
+                <game.mod.uploader.directory>${user.home}/AppData/Roaming/songsofsyx/mods-uploader</game.mod.uploader.directory>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
             </activation>
         </profile>
         <profile>
